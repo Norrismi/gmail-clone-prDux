@@ -12,7 +12,7 @@ import firebase from './firebase';
 const SendMail = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const dispatch = useDispatch()
-    const db = firebase.collection('subs')
+    const db = firebase.collection('emails')
 
 
     const onSubmit = (formData) => {
@@ -20,7 +20,8 @@ const SendMail = () => {
 
         db.add({
             to: formData.To,
-            subject: formData.Message,
+            subject: formData.Subject,
+            message: formData.Message,
             time: new Date()
         })
         dispatch(closeSendMessage());
@@ -40,7 +41,7 @@ const SendMail = () => {
                     name='to'
                     placeholder='To'
                     type='email'
-                    {...register("To", { required: true })}
+                    {...register("to", { required: true })}
                 />
                 {errors.To && <p className="sendMail__error">To is required!</p>}
 
@@ -49,7 +50,7 @@ const SendMail = () => {
                     placeholder='Subject'
                     type='text'
                     // ref={register({ required: true })}
-                    {...register("Subject", { required: true })}
+                    {...register("subject", { required: true })}
                 />
                 {errors.Subject && <p className="sendMail__error">Subject is required!</p>}
 
@@ -59,7 +60,7 @@ const SendMail = () => {
                     type='text'
                     className='sendMail__message'
                     // ref={register({ required: true })}
-                    {...register("Message", { required: true })}
+                    {...register("message", { required: true })}
                 />
                 {errors.Message && <p className="sendMail__error">Message is required!</p>}
 
